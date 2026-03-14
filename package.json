@@ -1,0 +1,24 @@
+{
+  "name": "gemini-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "htmlhint **/*.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/Lovelees125l/gemini-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Lovelees125l/gemini-site/issues"
+  },
+  "homepage": "https://github.com/Lovelees125l/gemini-site#readme",
+  "devDependencies": {
+    "htmlhint": "^1.9.2"
+  }
+}
