@@ -1,20 +1,31 @@
-name: CI Check
-on: [push, pull_request] # Запускать при пуше и создании PR
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
 
 jobs:
-  test:
+  # Частина 1: Лінтер
+  linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4 # Копируем код в облако
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
+      - uses: actions/checkout@v4
       - name: Install dependencies
-        run: npm install # Устанавливаем линтер в облаке
+        run: npm install
+      - name: Run HTMLHint
+        run: npx htmlhint index.html
 
-      - name: Run Linter
-        run: npm run lint # Запускаем нашу проверку
+  # Частина 2: Docker Build & Push (імітація для лаби)
+  docker_processing:
+    needs: linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build Docker Image
+        run: docker build -t gemini-site:${{ github.sha }} .
+        
+      - name: Docker Push Simulation
+        run: |
+          echo "Image tagged: gemini-site:${{ github.sha }}"
+          echo "Pushing to registry... Success!"
