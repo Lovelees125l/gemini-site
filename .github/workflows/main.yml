@@ -15,7 +15,7 @@ jobs:
       - name: Run HTMLHint
         run: npx htmlhint index.html
 
-  # Частина 2: Docker Build & Push (імітація для лаби)
+  # Частина 2: Docker Build & Push (імітація)
   docker_processing:
     needs: linter
     runs-on: ubuntu-latest
@@ -29,3 +29,15 @@ jobs:
         run: |
           echo "Image tagged: gemini-site:${{ github.sha }}"
           echo "Pushing to registry... Success!"
+
+  performance_test:
+    needs: docker_processing # Запускаємо після того, як переконалися, що образ збирається
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run k6 load test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          filename: tests/load-test.js # Шлях до файлу з тестами
